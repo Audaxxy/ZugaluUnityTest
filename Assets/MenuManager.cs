@@ -10,8 +10,8 @@ public class MenuManager : MonoBehaviour
     public static string playerName;
 
     [SerializeField]  private TMP_Text playerNameField;
-    
-    public void loadScene(string sceneName)
+	
+	public void loadScene(string sceneName)
     {
         playerName = playerNameField.text;
         SceneManager.LoadScene(sceneName);

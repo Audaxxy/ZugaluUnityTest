@@ -4,23 +4,35 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-    [SerializeField] private Camera unitCamera;
-    [SerializeField] private Transform currentUnitTransform;
+   
     [SerializeField] private float cameraHeight;
-    [SerializeField] private Transform unitTarget;
     [SerializeField] private Material selected,unselected;
 
-    // Update is called once per frame
-    void Update()
+    private Camera unitCamera;
+    private Transform currentUnitTransform;
+
+	// Update is called once per frame
+	private void Awake()
+	{
+        unitCamera = GetComponent<Camera>();
+	}
+	void Update()
     {
-        unitCamera.transform.position = new Vector3(currentUnitTransform.position.x, cameraHeight, currentUnitTransform.position.z);
+        if (currentUnitTransform != null)
+        {
+            unitCamera.transform.position = new Vector3(currentUnitTransform.position.x, cameraHeight, currentUnitTransform.position.z);
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
             Click();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Deselect();
+        }
     }
-    public void Click()
+    private void Click()
     {
         Ray ray = unitCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -29,20 +41,28 @@ public class UnitController : MonoBehaviour
         {
             if (hit.transform.tag == "Unit")
             {
-                if (currentUnitTransform.GetComponent<MeshRenderer>() != null)
+                if (currentUnitTransform)
                 {
                     currentUnitTransform.GetComponent<MeshRenderer>().material = unselected;
                 }
-
                     currentUnitTransform = hit.transform;
                     currentUnitTransform.GetComponent<MeshRenderer>().material = selected;
-                
             }
             else if (hit.transform.tag == "Ground") 
             {
-                currentUnitTransform.GetComponentInParent<UnitAI>().updateTarget(hit.point);
+                if (currentUnitTransform)
+                {
+                    currentUnitTransform.GetComponentInParent<UnitAI>().updateTarget(hit.point);
+                }
             }
         }
-
+    }
+    private void Deselect()
+    {
+        if (currentUnitTransform)
+        {
+            currentUnitTransform.GetComponent<MeshRenderer>().material = unselected;
+            currentUnitTransform = null;
+        }
     }
 }

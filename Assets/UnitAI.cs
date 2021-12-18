@@ -6,14 +6,13 @@ using UnityEngine.AI;
 
 public class UnitAI : MonoBehaviour
 {
-	[SerializeField] private Camera unitCamera;
-	[SerializeField] private Vector3 agentTarget;
+	private Vector3 agentTarget;
 	private NavMeshAgent unitAgent;
 	
 
 	private void Awake()
 	{
-		agentTarget = this.transform.position;
+		agentTarget = transform.position;
 		unitAgent = GetComponent<NavMeshAgent>();
 	}
 	private void Update()

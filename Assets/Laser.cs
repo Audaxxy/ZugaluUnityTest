@@ -1,22 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    [SerializeField] private float speed;
+	[SerializeField] private float speed, lifetime;
     [SerializeField] private Rigidbody bullet;
-	private void Awake()
+	
+	private void OnEnable()
 	{
-		Destroy(gameObject, 1f);
+		StartCoroutine(DisableAfterSeconds(lifetime, gameObject));
+		bullet.velocity = transform.forward * speed;
 	}
-	void Update()
-    {
-        bullet.velocity = transform.forward * speed;
-    }
+	IEnumerator DisableAfterSeconds(float seconds, GameObject obj)
+	{
+		yield return new WaitForSeconds(seconds);
+		obj.SetActive(false);
+	}
 	private void OnCollisionEnter(Collision collision)
 	{
-        if (collision.transform.tag == "Unit")
-        Destroy(gameObject);
+		if (collision.transform.tag == "Unit")
+		{
+			gameObject.SetActive(false);
+		}
 	}
 }
