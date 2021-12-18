@@ -6,8 +6,8 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
+    
     public static string playerName;
-
 
     [SerializeField]  private TMP_Text playerNameField;
     
