@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ZugaluMenu.unity
+    path: Assets/Scenes/ZugaluMenu.unity
     guid: ff141171b9ebff04dbd7d53974ac79ec
   - enabled: 1
-    path: Assets/ZugaluMain.unity
+    path: Assets/Scenes/ZugaluMain.unity
     guid: 2fb60daad5f96ed46b07e66b13d3970b
   m_configObjects: {}
